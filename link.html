@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#16265A">
+<title>ساخت لینک اختصاصی پرسشنامه</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<style>
+:root{--lapis:#16265A;--lapis-d:#0D1A44;--turq:#1C8C8C;--turq-s:#E1F0EF;--ivory:#F4F6F5;--paper:#fff;--ink:#1B2233;--muted:#5C6878;--line:#D5DCE2;--gold:#D4A03A;--err:#B3413A;
+--font:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--font);background:var(--ivory);color:var(--ink);line-height:1.9;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+header{background:var(--lapis) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.07'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");color:#fff;padding:34px 20px 30px}
+header div{max-width:520px;margin:0 auto}
+h1{margin:0 0 6px;font-size:1.45rem;font-weight:800;line-height:1.6}
+header p{margin:0;color:#DCE3F5;font-size:.95rem}
+main{max-width:520px;margin:0 auto;padding:22px 18px 60px}
+label{display:block;font-weight:700;margin:16px 0 6px;color:var(--lapis-d)}
+input,select,textarea{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--turq);outline-offset:2px}
+.out{margin-top:26px;background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px}
+.out h2{font-size:1.02rem;margin:0 0 10px;color:var(--lapis-d)}
+.url{direction:ltr;text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;word-break:break-all;background:var(--ivory);border-radius:10px;padding:10px 12px;user-select:all}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.btn{border-radius:12px;padding:12px 10px;font-weight:700;cursor:pointer;border:1.5px solid var(--lapis);background:var(--paper);color:var(--lapis);text-align:center;text-decoration:none;display:block}
+.btn.primary{background:var(--lapis);color:#fff}
+.btn.full{grid-column:1/-1}
+.msg{white-space:pre-wrap;background:var(--ivory);border-radius:10px;padding:12px;font-size:.92rem;margin:0}
+.note{color:var(--muted);font-size:.84rem;margin-top:10px}
+.err{color:var(--err);font-size:.9rem;min-height:1.5em;margin-top:6px}
+.credit{text-align:center;color:var(--muted);font-size:.8rem;margin-top:30px}
+</style>
+</head>
+<body>
+<header><div>
+  <h1>لینک اختصاصی پرسشنامه‌ی شما</h1>
+  <p>نام خود را وارد کنید تا لینک مخصوص شما ساخته شود. پاسخ‌دهندگان ناشناس می‌مانند.</p>
+</div></header>
+
+<main>
+  <label for="name">نام شما</label>
+  <input id="name" type="text" maxlength="60" autocomplete="name" placeholder="مثلاً: علی رضایی">
+
+  <div class="err" id="err" role="alert"></div>
+
+  <section class="out" id="out" hidden>
+    <h2>لینک شما آماده است</h2>
+    <div class="url" id="url"></div>
+    <div class="row">
+      <button class="btn primary" id="copy" type="button">کپی لینک</button>
+      <a class="btn" id="test" target="_blank" rel="noopener">پیش‌نمایش</a>
+    </div>
+
+    <h2 style="margin-top:20px">پیام آماده برای ارسال</h2>
+    <p class="msg" id="msg"></p>
+    <div class="row">
+      <button class="btn primary full" id="copyMsg" type="button">کپی پیام و لینک</button>
+      <a class="btn" id="wa" target="_blank" rel="noopener">واتساپ</a>
+      <a class="btn" id="eitaa" target="_blank" rel="noopener">ایتا</a>
+      <a class="btn" id="tg" target="_blank" rel="noopener">تلگرام</a>
+      <a class="btn" id="sms">پیامک</a>
+    </div>
+    <p class="note">این لینک را فقط برای کسانی بفرستید که دعوتشان کرده‌اید؛ تا پاسخ‌ها به نام شما ثبت شود.</p>
+  </section>
+  <div class="credit">طراح: M.S</div>
+</main>
+
+<script>
+/* ======================= تنظیمات ======================= */
+// آدرس صفحه‌ی پرسشنامه؛ اگر خالی باشد، survey.html کنار همین فایل در نظر گرفته می‌شود
+const SURVEY_URL = "";
+
+const $ = id => document.getElementById(id);
+const invitation = url =>
+`سلام، وقتتان بخیر 🌿
+از اینکه به گفت‌وگوی ما فرصت دادید سپاسگزارم. برای بهتر شدن مسیر همراهی، یک پرسشنامه‌ی کوتاه (کمتر از ۲ دقیقه) و کاملاً ناشناس آماده کرده‌ایم. نظر صادقانه‌ی شما برای ما ارزشمند است:
+
+${url}`;
+
+try { $("name").value = localStorage.getItem("lk_name") || ""; } catch (e) {}
+
+function build() {
+  const name = $("name").value.trim();
+  if (!name) { $("out").hidden = true; return; }
+  try { localStorage.setItem("lk_name", name); } catch (e) {}
+  const base = SURVEY_URL || new URL("survey.html", location.href).href.split("?")[0];
+  const url = `${base}?r=${encodeURIComponent(name)}`;
+  const text = invitation(url);
+  $("url").textContent = url;
+  $("test").href = url;
+  $("msg").textContent = text;
+  $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+  $("eitaa").href = "https://eitaa.com/share/url?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(text.replace(url, "").trim());
+  $("tg").href = "https://t.me/share/url?url=" + encodeURIComponent(url) + "&text=" + encodeURIComponent(text.replace(url, "").trim());
+  $("sms").href = "sms:?&body=" + encodeURIComponent(text);
+  $("out").hidden = false;
+  $("out").dataset.url = url; $("out").dataset.text = text;
+}
+$("name").addEventListener("input", build);
+
+async function copy(t, btn) {
+  try { await navigator.clipboard.writeText(t); }
+  catch (e) { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+  const old = btn.textContent; btn.textContent = "کپی شد ✓"; setTimeout(() => btn.textContent = old, 1600);
+}
+$("copy").onclick = e => copy($("out").dataset.url, e.currentTarget);
+$("copyMsg").onclick = e => copy($("out").dataset.text, e.currentTarget);
+build();
+</script>
+</body>
+</html>

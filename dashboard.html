@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#16265A">
+<title>داشبورد تحلیل پرسشنامه‌ی دعوت</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css">
+<style>
+:root{--lapis:#16265A;--lapis-d:#0D1A44;--turq:#1C8C8C;--turq-s:#E1F0EF;--ivory:#F4F6F5;--paper:#fff;--ink:#1B2233;--muted:#5C6878;--line:#D5DCE2;--gold:#D4A03A;--err:#B3413A;
+--c1:#B3413A;--c2:#D4A03A;--c3:#1C8C8C;
+--font:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--font);background:var(--ivory);color:var(--ink);line-height:1.85;-webkit-text-size-adjust:100%}
+button,input,select{font:inherit;color:inherit}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--turq);outline-offset:2px}
+header{background:var(--lapis);color:#fff;padding:22px 18px}
+header div{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:1.3rem;font-weight:800}
+main{max-width:980px;margin:0 auto;padding:18px 16px 60px}
+.login{max-width:380px;margin:60px auto;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:22px}
+.login h2{margin:0 0 12px;font-size:1.15rem;color:var(--lapis-d)}
+label{display:block;font-weight:700;margin:12px 0 4px;font-size:.92rem}
+input,select{width:100%;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+.btn{border-radius:10px;padding:10px 16px;font-weight:700;cursor:pointer;border:1.5px solid var(--lapis);background:var(--lapis);color:#fff}
+.btn.light{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+.btn.line{background:var(--paper);color:var(--lapis)}
+.err{color:var(--err);min-height:1.5em;font-size:.9rem;margin-top:8px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.filters div{flex:1;min-width:150px}
+.filters label{margin-top:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:22px}
+.kpi{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;border-top-width:4px}
+.kpi b{display:block;font-size:1.9rem;line-height:1.3;color:var(--lapis-d)}
+.kpi span{color:var(--muted);font-size:.88rem}
+.k0{border-top-color:var(--lapis)}.k1{border-top-color:var(--c1)}.k2{border-top-color:var(--c2)}.k3{border-top-color:var(--c3)}
+section.sec{background:var(--paper);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+section.sec h2{margin:0 0 4px;font-size:1.1rem;color:var(--lapis-d)}
+section.sec h3{margin:16px 0 6px;font-size:.95rem;color:var(--muted)}
+.sub{color:var(--muted);font-size:.86rem;margin:0 0 10px}
+.bar{display:grid;grid-template-columns:minmax(120px,42%) 1fr auto;gap:10px;align-items:center;margin:7px 0;font-size:.9rem}
+.bt{height:12px;background:#E7ECEF;border-radius:6px;overflow:hidden}
+.bt i{display:block;height:100%;background:var(--bc,var(--lapis));border-radius:6px}
+.bn{white-space:nowrap;font-weight:700}.bn small{font-weight:400;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:8px 6px;text-align:right;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:700;white-space:nowrap}
+.tw{overflow-x:auto}
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700;color:var(--lapis)}
+.quote{border-inline-start:3px solid var(--turq);background:var(--ivory);padding:10px 12px;border-radius:4px 10px 10px 4px;margin:10px 0}
+.quote small{display:block;color:var(--muted);font-size:.78rem}
+.tag{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:99px;background:var(--turq-s);color:#0F5F5F;margin-inline-end:4px}
+.empty{color:var(--muted);padding:8px 0}
+.ltr{direction:ltr;unicode-bidi:embed;display:inline-block}
+</style>
+</head>
+<body>
+
+<header><div>
+  <h1>داشبورد تحلیل پرسشنامه‌ی دعوت</h1>
+  <div id="hdrBtns" hidden style="gap:8px">
+    <button class="btn light" id="csv" type="button">خروجی اکسل (CSV)</button>
+    <button class="btn light" id="reload" type="button">بروزرسانی</button>
+    <button class="btn light" id="logout" type="button">خروج</button>
+  </div>
+</div></header>
+
+<main>
+  <!-- Login -->
+  <form class="login" id="login">
+    <h2>ورود</h2>
+    <label for="em">ایمیل</label>
+    <input id="em" type="email" dir="ltr" autocomplete="username" required>
+    <label for="pw">رمز عبور</label>
+    <input id="pw" type="password" dir="ltr" autocomplete="current-password" required>
+    <div class="err" id="lerr" role="alert"></div>
+    <button class="btn" style="width:100%;margin-top:6px" type="submit">ورود</button>
+  </form>
+
+  <!-- App -->
+  <div id="app" hidden>
+    <div class="filters">
+      <div><label for="fw">دعوت‌کننده</label><select id="fw"></select></div>
+      <div><label for="fp">بازه‌ی زمانی</label>
+        <select id="fp"><option value="0">همه</option><option value="7">۷ روز اخیر</option><option value="30">۳۰ روز اخیر</option><option value="90">۹۰ روز اخیر</option></select></div>
+    </div>
+    <div id="out"></div>
+  </div>
+</main>
+
+<script>
+/* ======================= تنظیمات ======================= */
+const CONFIG = { SUPABASE_URL: "https://atrfyfwwhtzxarnpjnlu.supabase.co", SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF0cmZ5Znd3aHR6eGFybnBqbmx1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2MTI5MjcsImV4cCI6MjEwMDE4ODkyN30.o-nD3ROsmmUSpQHbziQi7qKz4qdRAC9EXhDino95wL8", TABLE: "survey_responses" };
+
+/* ======================= برچسب‌ها ======================= */
+const ST = { not_attended: "دعوت شدند ولی نیامدند", not_started: "شنیدند ولی شروع نکردند", not_continued: "شروع کردند ولی ادامه ندادند" };
+const STC = { not_attended: "var(--c1)", not_started: "var(--c2)", not_continued: "var(--c3)" };
+const RS = {
+  not_attended: { time: "زمان مناسب نبود", unclear_topic: "نامشخص بودن موضوع", pyramid_fear: "تصور هرمی/غیرقابل‌اعتماد", bad_past: "تجربه‌ی بد قبلی", no_trust_inviter: "اعتماد/انگیزه از دعوت‌کننده نگرفتند", not_for_me: "فکر کردند به درد‌شان نمی‌خورد", family: "مخالفت خانواده/اطرافیان", forgot: "فراموشی / نبود پیگیری", other: "سایر" },
+  not_started: { capital: "هزینه/سرمایه‌ی ورود", time: "نبود زمان", income_doubt: "تردید در واقعی بودن درآمد", fear_sales: "ترس از فروش و دعوت", unclear_explain: "توضیحات گنگ بود", family: "مخالفت خانواده/اطرافیان", inviter_relation: "رابطه/رفتار دعوت‌کننده", product: "قانع نشدن از محصول", other: "سایر" },
+  not_continued: { no_fast_result: "ندیدن نتیجه‌ی سریع", no_training: "آموزش ناکافی", no_next_step: "نمی‌دانستند قدم بعدی چیست", rejection_fatigue: "خستگی از «نه» شنیدن", time: "سختی وقت‌گذاری", no_followup: "پیگیر نبودن دعوت‌کننده", team_env: "فضای تیم انگیزه نداد", financial: "مشکل مالی", other: "سایر" }
+};
+const WHEN = { week1: "هفته‌ی اول", month1: "ماه اول", m1_3: "۱ تا ۳ ماه", m3_plus: "بعد از ۳ ماه" };
+const BACK = { yes: "بله، برمی‌گردند", maybe: "شاید", no: "خیر" };
+
+/* ======================= ابزارها ======================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fa = n => Number(n).toLocaleString("fa-IR");
+const pct = (n, t) => t ? fa(Math.round(n / t * 100)) + "٪" : "—";
+const avg = a => a.length ? (a.reduce((x, y) => x + y, 0) / a.length) : null;
+const fmtAvg = v => v == null ? "—" : v.toLocaleString("fa-IR", { maximumFractionDigits: 1 });
+const jdate = iso => new Intl.DateTimeFormat("fa-IR-u-ca-persian", { year: "numeric", month: "long", day: "numeric" }).format(new Date(iso));
+const count = (arr, f) => { const m = new Map(); arr.forEach(x => { const k = f(x); if (k != null) m.set(k, (m.get(k) || 0) + 1); }); return m; };
+const bars = (entries, total, color) => entries.length ? entries.map(([l, n]) =>
+  `<div class="bar" ${color ? `style="--bc:${color}"` : ""}><div>${esc(l)}</div><div class="bt"><i style="width:${total ? n / total * 100 : 0}%"></i></div><div class="bn">${fa(n)} <small>(${pct(n, total)})</small></div></div>`).join("")
+  : `<div class="empty">هنوز پاسخی ثبت نشده است.</div>`;
+
+let TOKEN = null, ALL = [];
+
+/* ======================= ورود و دریافت داده ======================= */
+$("login").onsubmit = async e => {
+  e.preventDefault(); $("lerr").textContent = "";
+  if (!CONFIG.SUPABASE_URL) { $("lerr").textContent = "ابتدا تنظیمات Supabase را در فایل وارد کنید."; return; }
+  try {
+    const r = await fetch(`${CONFIG.SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: "POST", headers: { "Content-Type": "application/json", apikey: CONFIG.SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email: $("em").value.trim(), password: $("pw").value })
+    });
+    const j = await r.json();
+    if (!r.ok || !j.access_token) throw new Error();
+    TOKEN = j.access_token; $("pw").value = "";
+    await load();
+  } catch (_) { $("lerr").textContent = "ایمیل یا رمز عبور درست نیست."; }
+};
+async function load() {
+  const r = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/${CONFIG.TABLE}?select=*&order=created_at.desc&limit=5000`, {
+    headers: { apikey: CONFIG.SUPABASE_ANON_KEY, Authorization: `Bearer ${TOKEN}` }
+  });
+  if (!r.ok) { $("lerr").textContent = "دریافت اطلاعات ناموفق بود."; return; }
+  ALL = await r.json();
+  $("login").hidden = true; $("app").hidden = false; $("hdrBtns").hidden = false; $("hdrBtns").style.display = "flex";
+  const wgs = [...new Set(ALL.map(x => x.inviter).filter(Boolean))].sort((a, b) => a.localeCompare(b, "fa"));
+  const cur = $("fw").value;
+  $("fw").innerHTML = `<option value="">همه‌ی دعوت‌کننده‌ها</option>` + wgs.map(w => `<option value="${esc(w)}">${esc(w)}</option>`).join("");
+  $("fw").value = cur; render();
+}
+$("reload").onclick = load;
+$("logout").onclick = () => { TOKEN = null; ALL = []; $("app").hidden = true; $("hdrBtns").style.display = "none"; $("login").hidden = false; };
+$("fw").onchange = $("fp").onchange = () => render();
+
+function filtered() {
+  const w = $("fw").value, d = +$("fp").value, since = d ? Date.now() - d * 864e5 : 0;
+  return ALL.filter(x => (!w || x.inviter === w) && (!since || new Date(x.created_at).getTime() >= since));
+}
+
+/* ======================= نمایش ======================= */
+function table(rows, keyFn, keyLabel) {
+  const m = new Map();
+  rows.forEach(x => { const k = keyFn(x) || "— نامشخص —"; (m.get(k) || m.set(k, []).get(k)).push(x); });
+  const body = [...m.entries()].sort((a, b) => b[1].length - a[1].length).map(([k, a]) => {
+    const c = s => a.filter(x => x.status === s).length;
+    return `<tr><td>${esc(k)}</td><td>${fa(a.length)}</td><td>${fa(c("not_attended"))}</td><td>${fa(c("not_started"))}</td><td>${fa(c("not_continued"))}</td><td>${fmtAvg(avg(a.map(x => x.rating).filter(Boolean)))}</td></tr>`;
+  }).join("");
+  return `<div class="tw"><table><thead><tr><th>${keyLabel}</th><th>کل</th><th>نیامدند</th><th>شروع نکردند</th><th>ادامه ندادند</th><th>میانگین امتیاز</th></tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+function render() {
+  const rows = filtered(), n = rows.length;
+  const byS = s => rows.filter(x => x.status === s);
+  let h = `<div class="kpis">
+    <div class="kpi k0"><b>${fa(n)}</b><span>کل پاسخ‌ها</span></div>
+    ${Object.keys(ST).map((s, i) => `<div class="kpi k${i + 1}"><b>${fa(byS(s).length)}</b><span>${ST[s]} · ${pct(byS(s).length, n)}</span></div>`).join("")}
+  </div>`;
+
+  h += `<section class="sec"><h2>قیف ریزش</h2><p class="sub">هر پاسخ‌دهنده در کدام مرحله متوقف شده است؟</p>${bars(Object.keys(ST).map(s => [ST[s], byS(s).length]), n)}</section>`;
+
+  Object.keys(ST).forEach(s => {
+    const a = byS(s), reasons = [...count(a, x => x.reason)].map(([k, v]) => [RS[s][k] || k, v]).sort((x, y) => y[1] - x[1]);
+    let extra = "";
+    if (s === "not_continued" && a.length) {
+      extra += `<h3>زمان رها کردن</h3>` + bars([...count(a, x => x.extra?.when)].map(([k, v]) => [WHEN[k] || k, v]).sort((x, y) => y[1] - x[1]), a.length, STC[s]);
+      extra += `<h3>امکان بازگشت</h3>` + bars([...count(a, x => x.extra?.comeback)].map(([k, v]) => [BACK[k] || k, v]).sort((x, y) => y[1] - x[1]), a.length, STC[s]);
+    }
+    h += `<section class="sec"><h2>${ST[s]} <small style="font-weight:400;color:var(--muted)">(${fa(a.length)} نفر)</small></h2><p class="sub">دلیل اصلی از دید پاسخ‌دهنده‌ها</p>${bars(reasons, a.length, STC[s])}${extra}</section>`;
+  });
+
+  const rt = rows.map(x => x.rating).filter(Boolean);
+  h += `<section class="sec"><h2>تجربه‌ی دعوت شدن</h2><p class="sub">میانگین: <b>${fmtAvg(avg(rt))}</b> از ۵ · ${fa(rt.length)} امتیاز</p>` +
+    bars([5, 4, 3, 2, 1].map(v => [fa(v) + " امتیاز", rt.filter(x => x === v).length]), rt.length) + `</section>`;
+
+  h += `<section class="sec"><h2>تفکیک بر اساس دعوت‌کننده</h2>${table(rows, x => x.inviter, "دعوت‌کننده")}</section>`;
+
+  const texts = rows.filter(x => x.open_text || x.reason_other || x.extra?.negative_part);
+  h += `<section class="sec"><h2>پاسخ‌های تشریحی</h2><p class="sub">${fa(texts.length)} مورد</p>` +
+    (texts.slice(0, 80).map(x => `<div class="quote"><span class="tag">${esc(ST[x.status] || "")}</span>${x.reason ? `<span class="tag">${esc(RS[x.status]?.[x.reason] || x.reason)}</span>` : ""}
+      ${x.reason_other ? `<div>${esc(x.reason_other)}</div>` : ""}${x.extra?.negative_part ? `<div><b>نگرانی/ابهام:</b> ${esc(x.extra.negative_part)}</div>` : ""}${x.open_text ? `<div>${esc(x.open_text)}</div>` : ""}
+      <small>${esc(x.inviter || "")} · ${jdate(x.created_at)}</small></div>`).join("") || `<div class="empty">موردی نیست.</div>`) +
+    (texts.length > 80 ? `<p class="sub">فقط ۸۰ مورد آخر نمایش داده شده؛ برای همه از خروجی CSV استفاده کنید.</p>` : "") + `</section>`;
+
+  const cts = rows.filter(x => x.contact_ok && x.contact);
+  h += `<section class="sec"><h2>درخواست گفت‌وگو</h2><p class="sub">کسانی که خودشان خواسته‌اند تماس گرفته شود</p>` +
+    (cts.map(x => `<div class="quote"><b class="ltr">${esc(x.contact)}</b> <span class="tag">${esc(ST[x.status] || "")}</span><small>${esc(x.inviter || "")} · ${jdate(x.created_at)}</small></div>`).join("") || `<div class="empty">موردی نیست.</div>`) + `</section>`;
+
+  $("out").innerHTML = h;
+}
+
+/* ======================= خروجی CSV ======================= */
+$("csv").onclick = () => {
+  const cols = ["created_at", "inviter", "status", "reason", "reason_other", "open_text", "when", "comeback", "negative_part", "rating", "contact_ok", "contact"];
+  const cell = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [cols.join(",")].concat(filtered().map(x => cols.map(c => cell(["when", "comeback", "negative_part"].includes(c) ? x.extra?.[c] : x[c])).join(",")));
+  const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "survey-responses.csv"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
+</script>
+</body>
+</html>
